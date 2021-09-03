@@ -1,0 +1,8 @@
+export default{
+    PRIMARY_COLOR: '#543a21',
+    PRIMARY_COLOR_DARK: '#000000',
+    PRIMARY_COLOR_TEXT: '#d4c4ae',
+    SECONDARY_COLOR_TEXT: '#794517',
+    SECONDARY_COLOR: '#CD9662',
+    TRANSPARENT: 'rgba(0,0,0,0)'
+}
