@@ -6,21 +6,14 @@
  * @flow strict-local
  */
 
-import React, {useState, useEffect} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  StatusBar,
-  Alert
-} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView, StyleSheet, View, Text, StatusBar} from 'react-native';
 import colors from './src/utils/colors';
 import Form from './src/components/Forms';
 import Footer from './src/components/Footer';
 import Result from './src/components/Result';
 
-export default function App(){
+export default function App() {
   const [size, setSize] = useState(0);
   const [type, setType] = useState(0);
   const [payment, setPayment] = useState(0);
@@ -32,17 +25,16 @@ export default function App(){
     reset();
     if (!size) {
       setErrorMessage('Agregue un tamaño de cafe');
-    }else if (!type) {
+    } else if (!type) {
       setErrorMessage('Agrega el tipo de cafe que necesitas');
-    }else if (!payment) {
+    } else if (!payment) {
       setErrorMessage('Elija el metodo de pago a realizar');
-    }else if (!quantity) {
-      setErrorMessage('Agregue la cantidad de bebidas que necesita')
-    }
-    else{
+    } else if (!quantity || parseInt(quantity) < 0) {
+      setErrorMessage('Agregue una cantidad validad de bebidas');
+    } else {
       const desc = payment / 100;
-      const tot = ((size + type) * quantity) * desc;
-      setTotal((((size + type) * quantity) - tot).toFixed(2));
+      const tot = (size + type) * quantity * desc;
+      setTotal(((size + type) * quantity - tot).toFixed(2));
     }
   };
 
@@ -50,12 +42,10 @@ export default function App(){
     setErrorMessage('');
     setTotal(null);
   };
-
-
-  return(
+  return (
     <>
       <View style={styles.Body}>
-        <StatusBar barStyle="light-content"/>
+        <StatusBar barStyle="light-content" />
         <SafeAreaView style={styles.Header}>
           <Text style={styles.Title}>Start Bosco</Text>
           <Form
@@ -66,31 +56,30 @@ export default function App(){
           />
         </SafeAreaView>
         <Result
-          quantity = {quantity}
-          size = {size}
-          type = {type}
-          payment = {payment}
-          descuento = {payment}
-          total = {total}
-          errorMessage = {errorMessage}
+          quantity={quantity}
+          size={size}
+          type={type}
+          payment={payment}
+          descuento={payment}
+          total={total}
+          errorMessage={errorMessage}
         />
-        <Footer calculate = {calculate}></Footer>
+        <Footer calculate={calculate} />
       </View>
     </>
-  )
+  );
 }
 
-
 const styles = StyleSheet.create({
-  Body:{
+  Body: {
     backgroundColor: colors.PRIMARY_COLOR,
-    height: '100%'
+    height: '100%',
   },
   Header: {
     backgroundColor: colors.PRIMARY_COLOR_DARK,
     height: 250,
-    borderBottomLeftRadius:20,
-    borderBottomRightRadius:20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     alignItems: 'center',
   },
   Title: {
