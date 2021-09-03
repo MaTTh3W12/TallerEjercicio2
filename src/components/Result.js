@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
+import colors from "../utils/colors";
 
 export default function Result(props){
     const{size, type, payment, quantity, total, errorMessage}=props;
@@ -16,6 +17,7 @@ export default function Result(props){
         case 2:
           siz = "Grande"
         default:
+            siz="Elije tipo"
           break;
     }
 
@@ -35,6 +37,7 @@ export default function Result(props){
           break;
 
         default:
+            ty="Elije tipo"
           break;
     }
 
@@ -48,12 +51,13 @@ export default function Result(props){
           break;
       
         default:
+            pa="Elije tipo"
           break;
-      }
+    }
 
     return(
         <View style={StyleSheet.content}>
-            {(
+            {total &&(
                 <View style={styles.boxResult}>
                     <Text style={styles.title}>FACTURA</Text>
                     <DataResult title="Cantidad a pedir: " value={`${quantity}`}/>
@@ -61,10 +65,11 @@ export default function Result(props){
                     <DataResult title="Tipo de cafe: " value={`$${type} - ${ty}`}/>
                     <DataResult title="Tipo de pago: " value={`${pa}`}/>
                     <DataResult title="Descuento %: " value={`${payment} %`}/>
-                    <DataResult title="Total a pagar: " value={`$$total}`}/>
+                    <DataResult title="Total a pagar:" value={`$${total}`}/>
                 </View>
-            )}total
-            <View>
+            )}
+            <View style={styles.viewError}>
+                <Image source={require('../img/error.png')}/>
                 <Text style={styles.error}>{errorMessage}</Text>
             </View>
         </View>
@@ -105,9 +110,19 @@ const styles = StyleSheet.create({
     },
 
     error: {
-        textAlign: 'center',
-        color: '#f00',
+        textAlign: 'justify',
+        color: colors.SECONDARY_COLOR_TEXT,
         fontWeight: 'bold',
         fontSize: 20,
+        marginLeft: 10,
+        width: '75%'
     },
+
+    viewError: {
+      marginTop: '30%',
+      width: '80%',
+      marginLeft: '12%',
+      flexDirection: 'row',
+      backgroundColor: colors.SECONDARY_COLOR,
+    }
 });

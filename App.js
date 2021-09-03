@@ -21,10 +21,10 @@ import Footer from './src/components/Footer';
 import Result from './src/components/Result';
 
 export default function App(){
-  const [size, setSize] = useState(null);
-  const [type, setType] = useState(null);
-  const [payment, setPayment] = useState(null);
-  const [quantity, setQuantity] = useState(null);
+  const [size, setSize] = useState(0);
+  const [type, setType] = useState(0);
+  const [payment, setPayment] = useState(0);
+  const [quantity, setQuantity] = useState(0);
   const [total, setTotal] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -41,9 +41,8 @@ export default function App(){
     }
     else{
       const desc = payment / 100;
-      const tot = (size + type) * quantity
-      const val = tot * desc;
-      setTotal((tot - val).toFixed(2));
+      const tot = ((size + type) * quantity) * desc;
+      setTotal((((size + type) * quantity) - tot).toFixed(2));
     }
   };
 
@@ -51,6 +50,7 @@ export default function App(){
     setErrorMessage('');
     setTotal(null);
   };
+
 
   return(
     <>
@@ -71,9 +71,10 @@ export default function App(){
           type = {type}
           payment = {payment}
           descuento = {payment}
+          total = {total}
           errorMessage = {errorMessage}
         />
-        <Footer calculate={calculate}></Footer>
+        <Footer calculate = {calculate}></Footer>
       </View>
     </>
   )
